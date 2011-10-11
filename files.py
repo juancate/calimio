@@ -46,6 +46,9 @@ def cargarcapacidadcosto(f, n):
 		s.append({'capacidad': n, 'costo': costo,  'tiempo':tiempo})
 	return s
 
+"""
+Carga las lineas del costo de transporte
+"""
 def cargarvaloresmultiples(f, n, m):
 	s = []
 	for i in range(n):
