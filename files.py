@@ -41,9 +41,9 @@ def cargarcapacidadcosto(f, n):
 	s = []
 	for i in range(n):
 		junk = f.readline().split()
-		n = int(junk[0])
+		c = int(junk[0])
 		costo, tiempo = [int(x) for x in junk[-1].split('-')]
-		s.append({'capacidad': n, 'costo': costo,  'tiempo':tiempo})
+		s.append({'capacidad': c, 'costo': costo,  'tiempo':tiempo})
 	return s
 
 """
