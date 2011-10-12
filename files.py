@@ -1,4 +1,6 @@
-#!env python
+# -*- coding: utf-8 -*-
+
+from problema import Problema
 
 """
 Funcion para leer un archivo de entrada
@@ -7,21 +9,15 @@ Funcion para leer un archivo de entrada
 
 def leerarchivo(fn = 'input.in'):
 	f = open(fn, 'r')
+	p = Problema(int(f.readline()), int(f.readline()), int(f.readline()))
+	p.set_suministros(cargarlista(f, p.m))
+	p.set_demandas(cargarlista(f, p.j))
+	p.set_costos(cargarcapacidadcosto(f, p.n))
+	p.set_trans_a_bodega(cargarvaloresmultiples(f, p.n, p.m))
+	p.set_trans_a_demanda(cargarvaloresmultiples(f, p.j, p.m))
+	p.set_trans_bodega_a_demanda(cargarvaloresmultiples(f, p.j, p.n))
 
-	d = dict()
-	d['n'] = int(f.readline())
-	d['m'] = int(f.readline())
-	d['j'] = int(f.readline())
-	
-	d['suministros'] = cargarlista(f, d['m'])
-	d['demandas'] = cargarlista(f, d['j'])
-	d['costos'] = cargarcapacidadcosto(f, d['n'])
-	d['transbodega'] = cargarvaloresmultiples(f, d['n'], d['m'])
-	d['transdemanda'] = cargarvaloresmultiples(f, d['j'], d['m'])
-	d['tbodegademanda'] = cargarvaloresmultiples(f, d['j'], d['n'])
-
-	return d
-
+	return p
 
 """
 Funcion para cargar datos 
@@ -56,5 +52,3 @@ def cargarvaloresmultiples(f, n, m):
 		s.append(t)
 	return s
 
-for i in leerarchivo().iteritems():
-	print i
