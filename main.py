@@ -3,6 +3,6 @@
 
 import files
 
-#main 
+# main 
 if __name__=='__main__':
 	print files.leerarchivo()

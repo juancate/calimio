@@ -2,38 +2,49 @@
 
 from problema import Problema
 
-"""
-Funcion para leer un archivo de entrada
-@return un diccionario con los datos cargados
-"""
-
+# leerarchivo
 def leerarchivo(fn = 'input.in'):
+	"""Funcion para leer un archivo de entrada
+	returna un objeto de la clase Problema
+
+	Argumentos:
+	- `fn`: nombre del archivo
+	"""
 	f = open(fn, 'r')
 	p = Problema(int(f.readline()), int(f.readline()), int(f.readline()))
 	p.set_suministros(cargarlista(f, p.m))
 	p.set_demandas(cargarlista(f, p.j))
 	p.set_costos(cargarcapacidadcosto(f, p.n))
-	p.set_trans_a_bodega(cargarvaloresmultiples(f, p.n, p.m))
-	p.set_trans_a_demanda(cargarvaloresmultiples(f, p.j, p.m))
-	p.set_trans_bodega_a_demanda(cargarvaloresmultiples(f, p.j, p.n))
+	p.set_trans_a_bodega(cargarvaloresmultiples(f, p.n))
+	p.set_trans_a_demanda(cargarvaloresmultiples(f, p.j))
+	p.set_trans_bodega_a_demanda(cargarvaloresmultiples(f, p.j))
 
 	return p
 
-"""
-Funcion para cargar datos 
-en forma de listas
-"""
+
+# cargarlista
 def cargarlista(f, m):
+	"""Funcion para cargar datos en forma de listas
+
+	Argumentos:
+	- `f`: objeto file
+	- `m`: número de objetos a cargar
+	"""
 	s = []
 	for i in range(m):
 		el = int(f.readline())
 		s.append(el)
 	return s
 
-"""
-Carga las lineas raras con el - de la capacidad :P
-"""
+
+# cargarcapacidadcosto
 def cargarcapacidadcosto(f, n):
+	"""Carga las lineas raras con el - de la capacidad :P
+
+	Argumentos:
+	- `f`: objeto file
+	- `n`: número de objetos a cargar
+	"""
 	s = []
 	for i in range(n):
 		junk = f.readline().split()
@@ -42,10 +53,15 @@ def cargarcapacidadcosto(f, n):
 		s.append({'capacidad': n, 'costo': costo,  'tiempo':tiempo})
 	return s
 
-"""
-Carga las lineas del costo de transporte
-"""
-def cargarvaloresmultiples(f, n, m):
+
+# cargarvaloresmultiples
+def cargarvaloresmultiples(f, n):
+	"""Carga las lineas del costo de transporte
+
+	Argumentos:
+	- `f`: objeto file
+	-`n`: número de objetos a cargar
+	"""
 	s = []
 	for i in range(n):
 		t = [int(x) for x in f.readline().split()]
