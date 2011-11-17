@@ -9,6 +9,9 @@ def leerarchivo(fn = 'input.in'):
 
 	Argumentos:
 	- `fn`: nombre del archivo
+
+	Retorna:
+	- Una instacia de la clase Problema
 	"""
 	f = open(fn, 'r')
 	p = Problema(int(f.readline()), int(f.readline()), int(f.readline()))
