@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import files
+import modelo
 
 # main 
 if __name__=='__main__':
-	print files.leerarchivo()
+	modelo.solve(files.leerarchivo())
