@@ -19,26 +19,26 @@ def solve(p):
 	ret = lpsolve('set_lp_name', lp, 'calimio')
 	lpsolve('set_verbose','calimio',IMPORTANT)
 	funobj = crearFuncionObjetivo(p)
-	print 'Función objetivo', funobj, ' tamaño', len(funobj), 'total variables', total_variables
+	#print 'Función objetivo', funobj, ' tamaño', len(funobj), 'total variables', total_variables
 	lpsolve('set_obj_fn', 'calimio', funobj)
 	
 	for i in range(p.n+1):
 		if i < p.n:
 			restriccion = agregarRestriccionSuminitroDemanda(p, i)
-			print 'Restriccion', i, '=', restriccion
+			#print 'Restriccion', i, '=', restriccion
 			lpsolve('add_constraint', 'calimio', restriccion, LE, 0)
 			
 		for j in range(p.m):
 			restriccion = agregarRestriccionSuministro(p, i, j)
-			print 'Restriccion Suministro', j, '=', restriccion
+			#print 'Restriccion Suministro', j, '=', restriccion
 			lpsolve('add_constraint', 'calimio', restriccion, LE, 0)
 			
 		for j in range(p.j):
 			restriccion = agregarRestriccionDemanda(p, i, j)
-			print 'Restriccion Demanda', j, '=', restriccion
+			#print 'Restriccion Demanda', j, '=', restriccion
 			lpsolve('add_constraint', 'calimio', restriccion, EQ, 0)
 	
-	print 'Restriccion obvia', [val for x in [[1]*(p.n+1), [0]*(total_variables - p.n - 1)] for val in x]
+	#print 'Restriccion obvia', [val for x in [[1]*(p.n+1), [0]*(total_variables - p.n - 1)] for val in x]
 	lpsolve('add_constraint', 'calimio', [val for x in [[1]*(p.n+1), [0]*(total_variables - p.n - 1)] for val in x], EQ, 1)
 	
 	for i in range(p.n+2,total_variables+1):
@@ -49,7 +49,14 @@ def solve(p):
 	
 	lpsolve('write_lp', lp, 'a.lp')
 	lpsolve('solve', lp)
-	print lpsolve('get_objective', lp)
+	
+	resp = dict()
+	resp['funobj'] = round(lpsolve('get_objective', lp)) # Valor de la función objetivo
+	resp['variables'] = lpsolve('get_variables', lp)[0][:p.n+1] # Guardo el conjunto de variables binarias
+	resp['bodega'] = [i for i,x in enumerate(resp['variables']) if x == 1][0] # Escojo la bodega que fue solución, se indexa desde 0
+	
+	print 'Respuesta =', resp
+	return resp
 	
 
 def crearFuncionObjetivo(p):
@@ -73,9 +80,13 @@ def crearFuncionObjetivo(p):
 
 def asignarSuministroDemanda(matriz):
 	ret = []
-	for j in matriz:
-		for k in j:
-			ret.append(k) # Caoeficiente de transporte del punto de suministro j al punto de demanda k
+	#for j in matriz:
+	#	for k in j:
+	#		ret.append(k) # Caoeficiente de transporte del punto de suministro j al punto de demanda k
+			
+	for j in range(len(matriz[0])):
+		for i in range(len(matriz)):
+			ret.append(matriz[i][j])
 	return ret
 
 
