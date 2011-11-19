@@ -6,4 +6,9 @@ import modelo
 
 # main 
 if __name__=='__main__':
-	modelo.solve(files.leerarchivo())
+	import sys
+	
+	if len(sys.argv) == 2:
+		modelo.solve(files.leerarchivo(sys.argv[1]))
+	else:
+		print 'Especifique el nombre del archivo.'
