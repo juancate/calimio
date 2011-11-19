@@ -41,7 +41,7 @@ def solve(p):
 	print 'Restriccion obvia', [val for x in [[1]*(p.n+1), [0]*(total_variables - p.n - 1)] for val in x]
 	lpsolve('add_constraint', 'calimio', [val for x in [[1]*(p.n+1), [0]*(total_variables - p.n - 1)] for val in x], EQ, 1)
 	
-	for i in range(p.n+3,total_variables+1):
+	for i in range(p.n+2,total_variables+1):
 		lpsolve('set_int', lp, i, True)
 	
 	for i in range(1,p.n+2):

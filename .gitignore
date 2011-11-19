@@ -2,4 +2,5 @@
 *.in
 *.py[co]
 .*swp
+*.lp
 
