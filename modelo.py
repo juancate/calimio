@@ -47,13 +47,18 @@ def solve(p):
 	for i in range(1,p.n+2):
 		lpsolve('set_binary', lp, i, True)
 	
-	lpsolve('write_lp', lp, 'a.lp')
-	lpsolve('solve', lp)
-	
+	#lpsolve('write_lp', lp, 'a.lp')
+	ret = lpsolve('solve', lp)
+
 	resp = dict()
-	resp['funobj'] = round(lpsolve('get_objective', lp)) # Valor de la función objetivo
-	resp['variables'] = lpsolve('get_variables', lp)[0][:p.n+1] # Guardo el conjunto de variables binarias
-	resp['bodega'] = [i for i,x in enumerate(resp['variables']) if x == 1][0] # Escojo la bodega que fue solución, se indexa desde 0
+
+	if ret == 2: # La solución no es FEASIBLE
+		resp['feasible'] = False
+	elif ret == 0: # Solución óptima
+		resp['feasible'] = True
+		resp['funobj'] = round(lpsolve('get_objective', lp)) # Valor de la función objetivo
+		resp['variables'] = lpsolve('get_variables', lp)[0][:p.n+1] # Guardo el conjunto de variables binarias
+		resp['bodega'] = [i for i,x in enumerate(resp['variables']) if x == 1][0] # Escojo la bodega que fue solución, se indexa desde 0
 	
 	print 'Respuesta =', resp
 	return resp
@@ -80,9 +85,6 @@ def crearFuncionObjetivo(p):
 
 def asignarSuministroDemanda(matriz):
 	ret = []
-	#for j in matriz:
-	#	for k in j:
-	#		ret.append(k) # Caoeficiente de transporte del punto de suministro j al punto de demanda k
 			
 	for j in range(len(matriz[0])):
 		for i in range(len(matriz)):
