@@ -23,11 +23,11 @@ def output(resp):
 	print ' funcion objetivo: ', resp['funobj']
 	
 	if resp['bodega'] == n:
-		print ' bodega: ninguna',
+		print ' bodega: ninguna'
 	else:
 		print ' bodega: ', resp['bodega'] + 1 
+		print ' capacidad: ', resp['capacidad']
 	
-	print ' capacidad: ', resp['capacidad']
 	print ' unidades almacenadas: ', unidadesAlmacenadas(unidadesBodega)
 	print '...........................................'
 	print ''

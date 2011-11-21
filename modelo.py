@@ -63,7 +63,8 @@ def solve(p):
 		resp['binarias'] = lpsolve('get_variables', lp)[0][:p.n+1] # Guardo el conjunto de variables binarias
 		resp['variables'] = lpsolve('get_variables', lp)[0][p.n+1:total_variables+1] # Guarda el conjunto de variables no binarias
 		resp['bodega'] = [i for i,x in enumerate(resp['binarias']) if x == 1][0] # Escojo la bodega que fue solución, se indexa desde 0
-		resp['capacidad'] = p.costos[resp['bodega']]['capacidad']
+		if resp['bodega'] != p.n:
+			resp['capacidad'] = p.costos[resp['bodega']]['capacidad']
 	
 	#print 'Respuesta =', resp
 	return resp
