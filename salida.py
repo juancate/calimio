@@ -26,7 +26,7 @@ def output(resp):
 	else:
 		print ' bodega: ', resp['bodega'] + 1 
 	
-	print ' capacidad: '
+	print ' capacidad: ', resp['capacidad']
 	print ' unidades almacenadas: ', unidadesAlmacenadas(unidadesBodega)
 	print '...........................................'
 	print ''
