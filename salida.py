@@ -7,6 +7,7 @@ def output(resp):
 	- 'resp': Diccionario con la informacion de la bodega escogida
 	"""
 	if resp['feasible'] == False:
+		print 'El problema no tiene solución.'
 		return
 
 	n = resp['n']

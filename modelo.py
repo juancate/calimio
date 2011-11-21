@@ -65,7 +65,7 @@ def solve(p):
 		resp['bodega'] = [i for i,x in enumerate(resp['binarias']) if x == 1][0] # Escojo la bodega que fue solución, se indexa desde 0
 		resp['capacidad'] = p.costos[resp['bodega']]['capacidad']
 	
-	print 'Respuesta =', resp
+	#print 'Respuesta =', resp
 	return resp
 	
 
