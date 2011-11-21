@@ -56,9 +56,13 @@ def solve(p):
 		resp['feasible'] = False
 	elif ret == 0: # Solución óptima
 		resp['feasible'] = True
+		resp['n'] = p.n # Cantidad de Bodegas
+		resp['m'] = p.m # Cantidad de puntos de suministro
+		resp['j'] = p.j # Cantidad de puntos de demanda
 		resp['funobj'] = round(lpsolve('get_objective', lp)) # Valor de la función objetivo
-		resp['variables'] = lpsolve('get_variables', lp)[0][:p.n+1] # Guardo el conjunto de variables binarias
-		resp['bodega'] = [i for i,x in enumerate(resp['variables']) if x == 1][0] # Escojo la bodega que fue solución, se indexa desde 0
+		resp['binarias'] = lpsolve('get_variables', lp)[0][:p.n+1] # Guardo el conjunto de variables binarias
+		resp['variables'] = lpsolve('get_variables', lp)[0][p.n+1:total_variables+1] # Guarda el conjunto de variables no binarias
+		resp['bodega'] = [i for i,x in enumerate(resp['binarias']) if x == 1][0] # Escojo la bodega que fue solución, se indexa desde 0
 	
 	print 'Respuesta =', resp
 	return resp
